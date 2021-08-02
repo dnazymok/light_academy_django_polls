@@ -1,9 +1,14 @@
-{% if latest_question_list %}
-    <ul>
-    {% for question in latest_question_list %}
-        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends 'polls/layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <ul>
+            {% for test in latest_tests_list %}
+                <li>
+                    <a href="{% url 'polls:detail' test.id %}">{{ test.test_text }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
