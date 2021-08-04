@@ -4,6 +4,6 @@
     <div class="container">
         <h2>{{ test.test_text }}</h2>
         <p>{{ test.test_description }}</p>
-        <a href="{% url 'polls:run_test' test.id %}" class="btn btn-primary">Run test</a>
+        <a href="{% url 'polls:testrun' test.id %}" class="btn btn-primary">Run test</a>
     </div>
 {% endblock %}

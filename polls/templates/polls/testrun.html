@@ -1,0 +1,19 @@
+{% extends 'polls/layout.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="d-flex justify-content-center">{{ test.test_text }}</h2>
+        <p class="d-flex justify-content-center">{{ test.test_description }}</p>
+                {% for question in test.question_set.all %}
+                    <div>
+                        <p>{{ question.question_text }}</p>
+                        <input type="text">
+                    </div>
+                {% endfor %}
+        <form method="post">
+            <table>
+                {{ formset }}
+            </table>
+        </form>
+    </div>
+{% endblock %}

@@ -4,7 +4,7 @@ from .models import Test, Question
 
 
 class ChoiceInline(admin.TabularInline):
-    model = Question
+    model = Test.questions.through
     extra = 3
 
 

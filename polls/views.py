@@ -1,7 +1,10 @@
+from django.forms import modelformset_factory
+from django.shortcuts import render
 from django.utils import timezone
-from django.views import generic
+from django.views import generic, View
 
-from .models import Test
+from .models import Test, Testrun
+from .forms import TestrunModelForm
 
 
 class IndexView(generic.ListView):
@@ -20,10 +23,27 @@ class DetailView(generic.DetailView):
     context_object_name = 'test'
 
 
-class ResultsView(generic.DetailView):
-    model = Test
-    template_name = 'polls/results.html'
+class TestrunView(View):
+    def get(self, request, pk):
+        test = Test.objects.get(pk=pk)
+        questions = test.questions.all()
+        amount = questions.count()
+        TestrunFormSet = modelformset_factory(
+            Testrun,
+            form=TestrunModelForm,
+            extra=amount,
+            max_num=amount
+        )
+        context = {
+            "test": test,
+            'formset': TestrunFormSet(
+                queryset=Testrun.objects.none(),
+                initial=[{"question": question} for question in questions],
+            )
+        }
+        return render(
+            request,
+            "polls/testrun.html",
+            context=context,
+        )
 
-
-def run_test(request, test_id):
-    print(test_id)
