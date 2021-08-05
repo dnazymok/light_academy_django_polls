@@ -1,6 +1,6 @@
 from django import forms
 
-from polls.models import Question, Testrun, TestrunQuestion
+from polls.models import Question, TestrunQuestion
 
 
 class TestrunQuestionModelForm(forms.ModelForm):

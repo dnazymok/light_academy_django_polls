@@ -1,7 +1,5 @@
 from django.forms import modelformset_factory
-from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
 from django.views import generic, View
 
 from .forms import TestrunQuestionModelForm
@@ -23,16 +21,19 @@ class DetailView(generic.DetailView):
 class TestrunView(View):
     template_name = 'polls/testrun.html'
 
-    def get(self, request, pk):
-        test = get_object_or_404(Test, pk=pk)
-        questions = test.questions.all()
-        amount = questions.count()
-        TestrunQuestionFormSet = modelformset_factory(
+    def get_test_question_formset(self, amount):
+        return modelformset_factory(
             TestrunQuestion,
             form=TestrunQuestionModelForm,
             extra=amount,
             max_num=amount,
         )
+
+    def get(self, request, pk):
+        test = get_object_or_404(Test, pk=pk)
+        questions = test.questions.all()
+        amount = questions.count()
+        TestrunQuestionFormSet = self.get_test_question_formset(amount)
         context = {
             "test": test,
             "formset": TestrunQuestionFormSet(
@@ -47,12 +48,7 @@ class TestrunView(View):
         test = get_object_or_404(Test, pk=pk)
         questions = test.questions.all()
         amount = questions.count()
-        formset = TestrunFormQuestionSet = modelformset_factory(
-            TestrunQuestion,
-            form=TestrunQuestionModelForm,
-            extra=amount,
-            max_num=amount,
-        )(request.POST)
+        formset = self.get_test_question_formset(amount)(request.POST)
         if formset.is_valid():
             testrun = Testrun.objects.create(test_id=pk)
             instances = formset.save(commit=False)

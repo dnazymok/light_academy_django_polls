@@ -13,7 +13,15 @@ class TestAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
 
 
+class TestrunQuestionInline(admin.TabularInline):
+    model = TestrunQuestion
+
+
+class TestrunAdmin(admin.ModelAdmin):
+    inlines = [TestrunQuestionInline]
+
+
 admin.site.register(Test, TestAdmin)
 admin.site.register(Question)
-admin.site.register(Testrun)
+admin.site.register(Testrun, TestrunAdmin)
 admin.site.register(TestrunQuestion)
