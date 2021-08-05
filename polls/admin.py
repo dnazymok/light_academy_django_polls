@@ -14,3 +14,4 @@ class TestAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Test, TestAdmin)
+admin.site.register(Question)

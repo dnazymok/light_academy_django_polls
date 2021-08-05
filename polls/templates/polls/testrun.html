@@ -4,16 +4,17 @@
     <div class="container">
         <h2 class="d-flex justify-content-center">{{ test.test_text }}</h2>
         <p class="d-flex justify-content-center">{{ test.test_description }}</p>
-                {% for question in test.question_set.all %}
-                    <div>
-                        <p>{{ question.question_text }}</p>
-                        <input type="text">
-                    </div>
-                {% endfor %}
-        <form method="post">
+{#        {% for question in test.questions.all %}#}
+{#            <div>#}
+{#                <p>{{ question.question_text }}</p>#}
+{#            </div>#}
+{#        {% endfor %}#}
+        <form action="{% url 'polls:testrun' test.id %}" method="POST">
+            {% csrf_token %}
             <table>
                 {{ formset }}
             </table>
+            <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
 {% endblock %}

@@ -1,20 +1,17 @@
 from django.forms import modelformset_factory
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.views import generic, View
 
-from .models import Test, Testrun
 from .forms import TestrunModelForm
+from .models import Test, Testrun
 
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_tests_list'
-
-    def get_queryset(self):
-        return Test.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+    queryset = Test.objects.all()
 
 
 class DetailView(generic.DetailView):
@@ -24,26 +21,36 @@ class DetailView(generic.DetailView):
 
 
 class TestrunView(View):
+    template_name = 'polls/testrun.html'
+
     def get(self, request, pk):
-        test = Test.objects.get(pk=pk)
+        test = get_object_or_404(Test, pk=pk)
         questions = test.questions.all()
         amount = questions.count()
         TestrunFormSet = modelformset_factory(
             Testrun,
             form=TestrunModelForm,
             extra=amount,
-            max_num=amount
+            max_num=amount,
         )
         context = {
             "test": test,
-            'formset': TestrunFormSet(
-                queryset=Testrun.objects.none(),
+            "formset": TestrunFormSet(
                 initial=[{"question": question} for question in questions],
             )
         }
-        return render(
-            request,
-            "polls/testrun.html",
-            context=context,
-        )
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        test = get_object_or_404(Test, pk=pk)
+        questions = test.questions.all()
+        amount = questions.count()
+        formset = TestrunFormSet = modelformset_factory(
+            Testrun,
+            form=TestrunModelForm,
+            extra=amount,
+            max_num=amount,
+        )(request.POST)
+        print(formset.cleaned_data)
 

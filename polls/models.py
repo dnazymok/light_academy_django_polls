@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Question(models.Model):
@@ -6,13 +7,6 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text
-
-
-class Answer(models.Model):
-    answer_text = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.answer_text
 
 
 class Test(models.Model):
@@ -27,6 +21,12 @@ class Test(models.Model):
 
 class Testrun(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
-    answers = models.ManyToManyField(Answer)
     finished_at = models.DateTimeField(auto_now_add=True)
 
+
+class Answer(models.Model):
+    answer_text = models.CharField(max_length=200)
+    testrun = models.ForeignKey(Testrun, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.answer_text

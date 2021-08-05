@@ -1,6 +1,6 @@
 from django import forms
 
-from polls.models import Testrun, Question
+from polls.models import Question, Testrun
 
 
 class TestrunModelForm(forms.ModelForm):
@@ -21,4 +21,4 @@ class TestrunModelForm(forms.ModelForm):
 
     class Meta:
         model = Testrun
-        fields = ("question", "answer")
+        fields = ("question", "answer",)
