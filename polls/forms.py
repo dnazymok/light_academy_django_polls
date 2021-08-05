@@ -1,9 +1,9 @@
 from django import forms
 
-from polls.models import Question, Testrun
+from polls.models import Question, Testrun, TestrunQuestion
 
 
-class TestrunModelForm(forms.ModelForm):
+class TestrunQuestionModelForm(forms.ModelForm):
     question = forms.ModelChoiceField(
         label="",
         queryset=Question.objects.all(),
@@ -20,5 +20,5 @@ class TestrunModelForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Testrun
+        model = TestrunQuestion
         fields = ("question", "answer",)

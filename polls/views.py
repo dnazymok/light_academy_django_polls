@@ -1,11 +1,11 @@
 from django.forms import modelformset_factory
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.views import generic, View
 
-from .forms import TestrunModelForm
-from .models import Test, Testrun
+from .forms import TestrunQuestionModelForm
+from .models import Test, Testrun, TestrunQuestion
 
 
 class IndexView(generic.ListView):
@@ -27,16 +27,17 @@ class TestrunView(View):
         test = get_object_or_404(Test, pk=pk)
         questions = test.questions.all()
         amount = questions.count()
-        TestrunFormSet = modelformset_factory(
-            Testrun,
-            form=TestrunModelForm,
+        TestrunQuestionFormSet = modelformset_factory(
+            TestrunQuestion,
+            form=TestrunQuestionModelForm,
             extra=amount,
             max_num=amount,
         )
         context = {
             "test": test,
-            "formset": TestrunFormSet(
-                initial=[{"question": question} for question in questions],
+            "formset": TestrunQuestionFormSet(
+                queryset=TestrunQuestion.objects.none(),
+                initial=[{"question": item.question_text} for item in questions],
             )
         }
 
@@ -46,11 +47,17 @@ class TestrunView(View):
         test = get_object_or_404(Test, pk=pk)
         questions = test.questions.all()
         amount = questions.count()
-        formset = TestrunFormSet = modelformset_factory(
-            Testrun,
-            form=TestrunModelForm,
+        formset = TestrunFormQuestionSet = modelformset_factory(
+            TestrunQuestion,
+            form=TestrunQuestionModelForm,
             extra=amount,
             max_num=amount,
         )(request.POST)
-        print(formset.cleaned_data)
+        if formset.is_valid():
+            testrun = Testrun.objects.create(test_id=pk)
+            instances = formset.save(commit=False)
+            for instance in instances:
+                instance.testrun = testrun
+            TestrunQuestion.objects.bulk_create(instances)
+            return redirect("polls:index")
 
