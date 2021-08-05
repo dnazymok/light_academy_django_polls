@@ -26,4 +26,4 @@ class Testrun(models.Model):
 class TestrunQuestion(models.Model):
     testrun = models.ForeignKey(Testrun, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer = models.CharField(max_length=100)
+    answer = models.CharField(max_length=300)
