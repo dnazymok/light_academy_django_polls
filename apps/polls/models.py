@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -20,6 +21,8 @@ class Test(models.Model):
 
 class Testrun(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
+                             default=None, null=True)
     finished_at = models.DateTimeField(auto_now_add=True)
 
 

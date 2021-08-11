@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import modelformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic, View
@@ -12,14 +13,21 @@ class IndexView(generic.ListView):
     queryset = Test.objects.all()
 
 
-class DetailView(generic.DetailView):
+class DetailView(LoginRequiredMixin, generic.DetailView):
+    login_url = '/accounts/login'
     model = Test
     template_name = 'polls/detail.html'
     context_object_name = 'test'
 
 
-class TestrunView(View):
+class TestrunView(LoginRequiredMixin, View):
+    login_url = '/accounts/login'
     template_name = 'polls/testrun.html'
+
+    def get_user(self, request):
+        if request.user.is_authenticated:
+            return request.user
+        return None
 
     def get_test_question_formset(self, amount):
         return modelformset_factory(
@@ -50,7 +58,7 @@ class TestrunView(View):
         amount = questions.count()
         formset = self.get_test_question_formset(amount)(request.POST)
         if formset.is_valid():
-            testrun = Testrun.objects.create(test_id=pk)
+            testrun = Testrun.objects.create(test_id=pk, user=self.get_user(request))
             instances = formset.save(commit=False)
             for instance in instances:
                 instance.testrun = testrun
