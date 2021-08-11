@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from polls.models import Test, Question
+from apps.polls.models import Test, Question
 
 
 class IndexViewTestCase(TestCase):
