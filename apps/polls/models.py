@@ -20,7 +20,8 @@ class Test(models.Model):
 
 
 class Testrun(models.Model):
-    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, related_name="test_runs",
+                             on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True,
                              default=None, null=True)
     finished_at = models.DateTimeField(auto_now_add=True)
