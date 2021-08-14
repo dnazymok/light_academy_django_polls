@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.cache import caches
 from django.forms import modelformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic, View
@@ -11,6 +12,16 @@ class IndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_tests_list'
     queryset = Test.objects.all()
+
+    def get_queryset(self):
+        mem_cache = caches["default"]
+        tests = mem_cache.get("tests_list", [])
+
+        if not tests:
+            tests = Test.objects.all()
+            mem_cache.set("tests_list", tests, 120)
+
+        return tests
 
 
 class DetailView(LoginRequiredMixin, generic.DetailView):
