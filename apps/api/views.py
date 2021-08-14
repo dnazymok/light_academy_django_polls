@@ -12,8 +12,9 @@ class TestListView(mixins.ListModelMixin,
                    GenericAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
-    filter_backends = [filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
     ordering_fields = ['test_text', 'pub_date']
+    search_fields = ['test_text', 'test_description']
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
