@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-14 12:59+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+
+#: apps/polls/templates/polls/detail.html:9
+msgid "Run test"
+msgstr "Запустити опитування"
+
+#: apps/polls/templates/polls/header.html:6
+msgid "Polls Project"
+msgstr "Проект для опитувань"
+
+#: apps/polls/templates/polls/header.html:23
+msgid "Change"
+msgstr "Змінити"
+
+#: apps/polls/templates/polls/testrun.html:13
+msgid "Save"
+msgstr "Зберегти"
+
+#: apps/register/templates/registration/logged_out.html:6
+msgid "Logged out!"
+msgstr "Ви вийшли"
+
+#: apps/register/templates/registration/logged_out.html:8
+msgid "Click here to login again."
+msgstr "Клікніть щоби залогінитись"
+
+#: apps/register/templates/registration/login.html:9
+msgid "Your username and password didn't match. Please try again."
+msgstr "Ваші імя та пароль не співпадають"
+
+#: apps/register/templates/registration/login.html:14
+msgid ""
+"Your account doesn't have access to this page. To proceed please login with "
+"an account that has access."
+msgstr "У вас нема доступу до сторінки"
+
+#: apps/register/templates/registration/login.html:16
+msgid "Please login to see this page."
+msgstr "Будь ласка залогіньтесь щоб побачити цю сторінку"
+
+#: apps/register/templates/registration/login.html:35
+msgid "Login"
+msgstr "Зайти"
+
+#: apps/register/templates/registration/login.html:41
+msgid "Lost password?"
+msgstr "Забули пароль?"
+
+#: apps/register/templates/registration/register.html:11
+msgid "Register"
+msgstr "Зарееструватися"
+
+#~ msgid "Poll"
+#~ msgstr "Додаток для опитувань"
+
+#~ msgid "List of polls"
+#~ msgstr "Список опитувань"

@@ -1,4 +1,5 @@
 {% extends 'polls/layout.html' %}
+{% load i18n %}
 
 {%  load crispy_forms_tags %}
 
@@ -7,7 +8,7 @@
         <form action="" method="POST" class="form-group">
             {% csrf_token %}
             {{ form|crispy }}
-            <button type="submit" class="btn btn-success">Register</button>
+            <button type="submit" class="btn btn-success">{% trans "Register" %}</button>
         </form>
     </div>
 {% endblock %}

@@ -1,9 +1,10 @@
 {% extends 'polls/layout.html' %}
+{% load i18n %}
 
 {% block content %}
     <div class="container">
-        <p>Logged out!</p>
+        <p>{% trans 'Logged out!'%}</p>
 
-        <a href="{% url 'login' %}">Click here to login again.</a>
+        <a href="{% url 'login' %}">{% trans 'Click here to login again.'%}</a>
     </div>
 {% endblock %}

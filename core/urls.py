@@ -48,6 +48,11 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(),
          name='token_refresh'),
     path('polls/', include('apps.polls.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
+
+]
+
+urlpatterns += [
     url(r'^swagger(?P<format>\.json|\.yaml)$',
         schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0),
