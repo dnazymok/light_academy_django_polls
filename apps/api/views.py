@@ -1,5 +1,5 @@
 from django.db.models import Count
-from rest_framework import mixins
+from rest_framework import mixins, filters
 from rest_framework.generics import GenericAPIView
 
 from apps.api.serializers import TestSerializer, TestrunSerializer, \
@@ -12,6 +12,8 @@ class TestListView(mixins.ListModelMixin,
                    GenericAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['test_text', 'pub_date']
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
