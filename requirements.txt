@@ -1,2 +1,5 @@
+drf_yasg==1.20.0
+django_filter==2.4.0
 Django==3.2.5
-djangorestframework~=3.12.4
+djangorestframework_simplejwt==4.7.2
+djangorestframework==3.12.4

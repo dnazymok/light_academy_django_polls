@@ -1,7 +1,9 @@
 from django.db.models import Count
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import mixins, filters
 from rest_framework.generics import GenericAPIView
 
+from apps.api.filters import TestFilter
 from apps.api.serializers import TestSerializer, TestrunSerializer, \
     TestWithRunsCountSerializer
 from apps.polls.models import Test, Testrun
@@ -12,9 +14,11 @@ class TestListView(mixins.ListModelMixin,
                    GenericAPIView):
     queryset = Test.objects.all()
     serializer_class = TestSerializer
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter]
+    filter_backends = [filters.OrderingFilter, filters.SearchFilter, DjangoFilterBackend]
+    filterset_class = TestFilter
     ordering_fields = ['test_text', 'pub_date']
     search_fields = ['test_text', 'test_description']
+
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
