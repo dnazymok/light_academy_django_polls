@@ -10,6 +10,8 @@ docker pull dnazymok/docker-lesson:latest
 docker run -d -p 8000:8000 dnazymok/docker-lesson:latest
 ```
 
+#### or
+
 ```
 git clone https://github.com/dnazymok/light_academy_django_polls.git
 cd light_academy_django_polls
