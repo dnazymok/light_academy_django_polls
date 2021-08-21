@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from django.views.generic.base import RedirectView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -39,6 +40,7 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('', RedirectView.as_view(pattern_name='polls:index')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/register/', register_view.register, name='register'),
     path('admin/', admin.site.urls),
@@ -47,9 +49,8 @@ urlpatterns = [
          name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(),
          name='token_refresh'),
-    path('polls/', include('apps.polls.urls')),
+    path('polls/', include('apps.polls.urls'), name='polls'),
     path('i18n/', include('django.conf.urls.i18n')),
-
 ]
 
 urlpatterns += [
