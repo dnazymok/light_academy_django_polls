@@ -6,8 +6,12 @@
 #### Docker
 
 ```
+git clone --branch docker-lesson https://github.com/dnazymok/light_academy_django_polls.git
+cd light_academy_django_polls
 docker-compose build
 docker-compose up -d
+docker-compose exec web python manage.py migrate
+`docker-compose exec web python manage.py createcachetable`
 ```
 
 #### or
