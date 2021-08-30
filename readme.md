@@ -11,7 +11,7 @@ cd light_academy_django_polls
 docker-compose build
 docker-compose up -d
 docker-compose exec web python manage.py migrate
-`docker-compose exec web python manage.py createcachetable`
+docker-compose exec web python manage.py createcachetable
 ```
 
 #### or
